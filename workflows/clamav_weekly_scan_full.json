@@ -1,0 +1,185 @@
+{
+  "name": "ClamAV \u2192 ntfy (SSH + POST, stable import)",
+  "nodes": [
+    {
+      "parameters": {
+        "triggerTimes": [
+          {
+            "mode": "everyWeek",
+            "weekDay": "sunday",
+            "hour": 3,
+            "minute": 0
+          }
+        ]
+      },
+      "id": "cron1",
+      "name": "Cron Weekly",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        200,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "command": "clamscan -r /home/gus/Documents -i",
+        "sshAuthentication": "password"
+      },
+      "id": "ssh1",
+      "name": "SSH ClamAV Scan",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        420,
+        300
+      ],
+      "continueOnFail": true,
+      "credentials": {
+        "ssh": {
+          "id": "__REPLACE_WITH_YOUR_SSH_CREDENTIAL_ID__",
+          "name": "Glaciar SSH"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ ($json[\"stdout\"] || \"\") + \"\\n\" + ($json[\"stderr\"] || \"\") }}",
+              "operation": "notContains",
+              "value2": "Infected files: 0"
+            }
+          ]
+        }
+      },
+      "id": "if1",
+      "name": "If Infected (text check)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://ntfy.sh/clamav-alerts",
+        "method": "POST",
+        "requestMethod": "POST",
+        "jsonParameters": false,
+        "sendBody": true,
+        "contentType": "raw",
+        "bodyContentType": "text",
+        "body": "\ud83d\udea8 Virus found on glaciar\n{{ (($json[\"stdout\"] || \"\") + \"\\n\" + ($json[\"stderr\"] || \"\")).split(\"\\n\").filter(l => l.includes(\"FOUND\")).slice(0,10).join(\"\\n\") || \"<no file lines>\" }}\n\nSummary:\n{{ (($json[\"stdout\"] || \"\") + \"\\n\" + ($json[\"stderr\"] || \"\")).split(\"\\n\").slice(-10).join(\"\\n\") }}",
+        "responseFormat": "string",
+        "options": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "text/plain"
+            },
+            {
+              "name": "X-Title",
+              "value": "ClamAV glaciar - Alert"
+            },
+            {
+              "name": "X-Priority",
+              "value": "5"
+            }
+          ],
+          "timeout": 30000
+        }
+      },
+      "id": "http1",
+      "name": "ntfy Infected",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        920,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://ntfy.sh/clamav-alerts",
+        "method": "POST",
+        "requestMethod": "POST",
+        "jsonParameters": false,
+        "sendBody": true,
+        "contentType": "raw",
+        "bodyContentType": "text",
+        "body": "\u2705 ClamAV (glaciar) \u2014 All clear\n{{ (($json[\"stdout\"] || \"\") + \"\\n\" + ($json[\"stderr\"] || \"\")).split(\"\\n\").filter(l => /^(Scanned|Infected|Time|Start Date|End Date)/.test(l)).join(\"\\n\") }}",
+        "responseFormat": "string",
+        "options": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "text/plain"
+            },
+            {
+              "name": "X-Title",
+              "value": "ClamAV glaciar - All clear"
+            },
+            {
+              "name": "X-Priority",
+              "value": "4"
+            }
+          ],
+          "timeout": 30000
+        }
+      },
+      "id": "http2",
+      "name": "ntfy Clean",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        920,
+        390
+      ]
+    }
+  ],
+  "connections": {
+    "Cron Weekly": {
+      "main": [
+        [
+          {
+            "node": "SSH ClamAV Scan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH ClamAV Scan": {
+      "main": [
+        [
+          {
+            "node": "If Infected (text check)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Infected (text check)": {
+      "main": [
+        [
+          {
+            "node": "ntfy Infected",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ntfy Clean",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
