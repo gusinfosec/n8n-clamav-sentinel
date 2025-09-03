@@ -1,4 +1,4 @@
-# n8n ClamAV Weekly — glaciar (Full)
+# n8n ClamAV Sentinel
 
 A full-featured **n8n workflow** that runs a **weekly ClamAV scan via SSH** and posts alerts/reports to **ntfy**.
 
@@ -12,10 +12,10 @@ A full-featured **n8n workflow** that runs a **weekly ClamAV scan via SSH** and 
 
 ## Features
 
-- SSH execution of `clamscan -r /home/gus/Documents -i`  
+- SSH execution of `clamscan -r /path/to/scan -i`  
 - Infection alerts show top 10 lines containing `FOUND` plus scan summary  
 - Clean report includes `Scanned`, `Infected`, `Time`, `Start Date`, `End Date` lines  
-- Posts to `https://ntfy.sh/clamav-alerts` with headers (`X-Title`, `X-Priority`)  
+- Posts to `https://ntfy.sh/<your-topic>` with headers (`X-Title`, `X-Priority`)  
 - Works with public or self-hosted ntfy servers
 
 ## Repo layout
@@ -36,13 +36,13 @@ n8n-clamav-sentinel/
 1. Import workflow:
    - UI: Workflows → Import from File → select `workflows/clamav_weekly_scan_full.json`
    - CLI: `./scripts/import.sh`
-2. In SSH node, configure credentials (`Glaciar SSH`).
-3. Adjust path `/home/gus/Documents` or schedule as needed.
+2. In SSH node, configure credentials (`your SSH credentials`).
+3. Adjust path `/path/to/scan` or schedule as needed.
 4. Ensure ClamAV is installed on the remote host.
 
 ## Customization
 
-- **Topic:** replace `https://ntfy.sh/clamav-alerts` with your ntfy topic  
+- **Topic:** replace `https://ntfy.sh/<your-topic>` with your ntfy topic  
 - **Threshold / parsing:** workflow checks for `Infected files: 0` absence to flag infection  
 - **Priority:** change `X-Priority` values for clean/alert messages
 
@@ -53,7 +53,10 @@ n8n-clamav-sentinel/
 
 ## GitHub Quickstart
 
-```bash
+Choose HTTPS **or** SSH.
+
+**HTTPS** (use a Personal Access Token when prompted):
+```bashbash
 git init
 git add .
 git commit -m "feat: n8n ClamAV weekly scan full → ntfy alerts"
@@ -71,3 +74,13 @@ Here’s how the workflow looks inside n8n:
 ---
 
 Built from the provided full workflow JSON. See `workflows/clamav_weekly_scan_full.json`.
+
+### SSH alternative
+```bash
+git init
+git add .
+git commit -m "feat: n8n ClamAV sentinel → ntfy alerts"
+git branch -M main
+git remote add origin git@github.com:<your-username>/n8n-clamav-sentinel.git
+git push -u origin main
+```
