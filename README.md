@@ -6,7 +6,7 @@
 <p align="center"><em>Automated weekly ClamAV scanning and alerts via ntfy — built for n8n power users and sysadmins</em></p>
 
 <p align="center">
-  <a href="https://ko-fi.com/s/60ece3037f" target="_blank">
+  <a href="https://ko-fi.com/s/d61795e2af" target="_blank">
     <img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Buy Me a Coffee on Ko-fi" />
   </a>
 </p>
