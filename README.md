@@ -1,4 +1,22 @@
-# n8n ClamAV Sentinel
+<p align="center">
+  <img src="assets/clamav-sentinel-logo.png" width="220" alt="n8n-ClamAV Sentinel Logo" />
+</p>
+
+<h1 align="center">n8n-ClamAV Sentinel</h1>
+<p align="center"><em>Automated weekly ClamAV scanning and alerts via ntfy — built for n8n power users and sysadmins</em></p>
+
+<p align="center">
+  <a href="https://ko-fi.com/s/60ece3037f" target="_blank">
+    <img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Buy Me a Coffee on Ko-fi" />
+  </a>
+</p>
+
+<p align="center">
+  <img alt="License" src="https://img.shields.io/github/license/gusinfosec/n8n-clamav-sentinel" />
+  <img alt="Status" src="https://img.shields.io/badge/status-active-success" />
+  <img alt="Stars" src="https://img.shields.io/github/stars/gusinfosec/n8n-clamav-sentinel?style=social" />
+</p>
+
 
 A full-featured **n8n workflow** that runs a **weekly ClamAV scan via SSH** and posts alerts/reports to **ntfy**.
 
