@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/clamav-sentinel-logo.png" width="220" alt="n8n-ClamAV Sentinel Logo" />
+  <img src="assets/clamav-sentinel-logo.png" width="300" alt="n8n-ClamAV Sentinel Logo" />
 </p>
 
 <h1 align="center">n8n-ClamAV Sentinel</h1>
