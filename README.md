@@ -19,7 +19,6 @@
 
 ---
 
-
 A full-featured **n8n workflow** that runs a **weekly ClamAV scan via SSH** and posts alerts/reports to **ntfy**.
 
 > Triggered weekly (Sunday 03:00). Runs `clamscan`, parses results, and notifies through ntfy with rich summaries.
