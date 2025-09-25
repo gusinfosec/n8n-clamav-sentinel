@@ -14,6 +14,7 @@
   <img alt="License" src="https://img.shields.io/github/license/gusinfosec/n8n-clamav-sentinel" />
   <img alt="Status" src="https://img.shields.io/badge/status-active-success" />
   <img alt="Stars" src="https://img.shields.io/github/stars/gusinfosec/n8n-clamav-sentinel?style=social" />
+  <img src="https://img.shields.io/badge/Built%20for-Linux-0078D6?style=flat-square&logo=linux" alt="Built for Linux">
 </p>
 
 
