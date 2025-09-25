@@ -1,7 +1,6 @@
 <p align="center">
   <img src="assets/clamav-sentinel-logo.png" width="300" alt="n8n-ClamAV Sentinel Logo" />
 </p>
-
 <h1 align="center">n8n-ClamAV Sentinel</h1>
 <p align="center"><em>Automated weekly ClamAV scanning and alerts via ntfy — built for n8n power users and sysadmins</em></p>
 
