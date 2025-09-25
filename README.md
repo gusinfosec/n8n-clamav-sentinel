@@ -17,6 +17,8 @@
   <img src="https://img.shields.io/badge/Built%20for-Linux-0078D6?style=flat-square&logo=linux" alt="Built for Linux">
 </p>
 
+---
+
 
 A full-featured **n8n workflow** that runs a **weekly ClamAV scan via SSH** and posts alerts/reports to **ntfy**.
 
